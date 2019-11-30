@@ -1,8 +1,8 @@
 import m from "mithril";
-import Job from "../components/Job";
+import Task from "../components/Task";
 import {apiBaseUrl} from '../../param';
 
-const JobList = {
+const TaskList = {
   
   list: [],
   pointMultiplier: 1,
@@ -10,13 +10,13 @@ const JobList = {
 	oninit: function() {
     return m.request({
 			method: "GET",
-			url: apiBaseUrl + "jobs",
+			url: apiBaseUrl + "tasks",
     })
     .then(function(result) {
-			JobList.list = result;
+			TaskList.list = result;
 			const numberOfMembers = 5;
-			JobList.pointMultiplier = numberOfMembers / result.reduce(
-				(sum, job) => {return sum + job.effort/job.frequency;}
+			TaskList.pointMultiplier = numberOfMembers / result.reduce(
+				(sum, task) => {return sum + task.effort/task.frequency;}
 				,0);
     })
   },
@@ -24,7 +24,7 @@ const JobList = {
 	view: function() {
 		return (
 			<div>
-				<h1>Jobs</h1>
+				<h1>Tasks</h1>
 				<table>
 					<thead>
 						<tr>
@@ -37,9 +37,9 @@ const JobList = {
 						</tr>
 					</thead>
 					<tbody>
-						{JobList.list.map(job => {return m(Job, {
-							...job,
-							pointMultiplier: JobList.pointMultiplier,
+						{TaskList.list.map(task => {return m(Task, {
+							...task,
+							pointMultiplier: TaskList.pointMultiplier,
 						})})}
 					</tbody>
 				</table>
@@ -48,4 +48,4 @@ const JobList = {
 	},
 };
 
-export default JobList;
+export default TaskList;

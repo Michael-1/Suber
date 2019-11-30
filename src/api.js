@@ -9,7 +9,7 @@ app.use(cors());
 const datastore = new Datastore();
 const queryTasks = datastore.createQuery(["Task"]);
 
-app.get('/jobs', (req, res) => {
+app.get('/tasks', (req, res) => {
   getTasks((err, entities) => {
     if (err) {
       console.log(err);

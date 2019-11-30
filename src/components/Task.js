@@ -1,18 +1,18 @@
 var m = require('mithril');
 import {apiBaseUrl} from '../../param';
 
-const Job = {
+const Task = {
 
 	view: function (vnode) {
-		const job = vnode.attrs;
-		const lastDone = new Date(job.lastDone);
+		const task = vnode.attrs;
+		const lastDone = new Date(task.lastDone);
 		const urgency = (Date.now()-lastDone.getTime()) /
-					(job.frequency*(1000*60*60*24));
-		const points = job.pointMultiplier * job.effort * urgency;
+					(task.frequency*(1000*60*60*24));
+		const points = task.pointMultiplier * task.effort * urgency;
 		return (			 
 			<tr>
-				<td>{job.room}</td>
-				<td>{job.object}</td>
+				<td>{task.room}</td>
+				<td>{task.object}</td>
 				<td>
 					{('00'+lastDone.getDate()).slice(-2)}.
 					{('00'+(lastDone.getMonth()+1)).slice(-2)}.
@@ -21,7 +21,6 @@ const Job = {
 				<td>{points.toFixed(2)}</td>
 				<td>
 					<button
-						data-id={job.id}
 					>
 						Erledigt
 					</button>
@@ -30,12 +29,10 @@ const Job = {
 		);
 	},
 
-	markAsDone: function(id) {
 		return m.request({
 			method: 'PATCH',
-			url: apiBaseUrl + 'job/' + id + '/done',
 		});
 	},
 };
 
-export default Job;
+export default Task;
