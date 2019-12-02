@@ -1,5 +1,5 @@
 const m = require("mithril");
-const param = require("../param");
+const param = require("../../../shared/param");
 
 module.exports = {
   view: function(vnode) {
@@ -27,7 +27,7 @@ module.exports = {
     m.request({
       method: "PATCH",
       url: param.API_BASE_URL + "task/:key/done",
-      params: { key: this.key }
+      params: { key: this.key },
     }).then(console.log(this.key));
-  }
+  },
 };

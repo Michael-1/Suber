@@ -1,0 +1,17 @@
+{
+  "description": "Fair planning of repetive tasks in a group without assignments",
+  "author": "Michael Schmid <michael.schmid@live.com>",
+  "license": "GPL-3.0",
+  "repository": "https://github.com/Michael-1/Suber.git",
+  "scripts": {
+    "start": "nodemon src/api.js"
+  },
+  "dependencies": {
+    "@google-cloud/datastore": "^4.5.2",
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.4"
+  }
+}

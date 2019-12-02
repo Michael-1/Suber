@@ -1,13 +1,10 @@
 const express = require("express");
 const cors = require("cors");
-const getTasks = require("./api/getTasks");
-const markAsDone = require("./api/markAsDone");
+const getTasks = require("./getTasks");
+const markAsDone = require("./markAsDone");
 
 const app = express();
-
-if (app.get("env") === "development") {
-  app.use(cors());
-}
+app.use(cors());
 
 app.get("/tasks", getTasks);
 app.patch("/task/:key/done", markAsDone);

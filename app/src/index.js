@@ -1,6 +1,6 @@
 import m from "mithril";
 import TaskList from "./views/TaskList";
 
-import './style.scss';
+import "./style.scss";
 
-m.mount(document.body, TaskList)
+m.mount(document.body, TaskList);

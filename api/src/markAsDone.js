@@ -1,6 +1,6 @@
 const { Datastore } = require("@google-cloud/datastore");
-const param = require("../param");
-const { Task } = require("../model/Task");
+const param = require("../../shared/param");
+const { Task } = require("../../shared/model/Task");
 
 const datastore = new Datastore();
 

@@ -1,7 +1,7 @@
 const m = require("mithril");
-const param = require("../param");
+const param = require("../../../shared/param");
 const TaskComponent = require("../components/Task");
-const { Task } = require("../model/Task");
+const { Task } = require("../../../shared/model/Task");
 
 const TaskList = {
   list: [],
@@ -11,7 +11,7 @@ const TaskList = {
       .request({
         method: "GET",
         url: param.API_BASE_URL + "tasks",
-        type: Task
+        type: Task,
       })
       .then(function(result) {
         TaskList.list = result;
@@ -41,7 +41,7 @@ const TaskList = {
         </table>
       </div>
     );
-  }
+  },
 };
 
 export default TaskList;
