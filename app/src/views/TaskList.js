@@ -1,20 +1,22 @@
 const m = require("mithril");
-const param = require("../../../shared/param");
 const TaskComponent = require("../components/Task");
-const { Task } = require("../../../shared/model/Task");
+const Task = require("../../../shared/model/Task");
 
-const TaskList = {
+module.exports = {
   list: [],
 
   oninit: function() {
     return m
       .request({
         method: "GET",
-        url: param.API_BASE_URL + "tasks",
+        url: "/api/tasks",
         type: Task,
       })
       .then(function(result) {
-        TaskList.list = result;
+        this.list = result;
+      })
+      .catch(function(error) {
+        m.route.set("/login");
       });
   },
 
@@ -34,7 +36,7 @@ const TaskList = {
             </tr>
           </thead>
           <tbody>
-            {TaskList.list.map(task => {
+            {this.list.map(task => {
               return m(TaskComponent, task);
             })}
           </tbody>
@@ -43,5 +45,3 @@ const TaskList = {
     );
   },
 };
-
-export default TaskList;

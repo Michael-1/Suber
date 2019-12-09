@@ -1,6 +1,6 @@
 const pointMultiplier = 1;
 
-exports.Task = function(task, currentTime) {
+module.exports = function(task, currentTime) {
   Object.assign(this, task);
   const now = currentTime ? currentTime.getTime() : Date.now();
   this.lastDone = new Date(task.lastDone);

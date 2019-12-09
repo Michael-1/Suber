@@ -1,0 +1,7 @@
+@mixin breakpoint-phone {
+  @media (max-width: 414px) {
+    @content;
+  }
+}
+
+$color-red: #b30000;

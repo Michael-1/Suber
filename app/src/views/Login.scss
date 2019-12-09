@@ -1,0 +1,47 @@
+@import "../variables";
+
+body {
+  margin: 1em;
+  display: flex;
+  &::before {
+    content: " ";
+    flex-grow: 1;
+  }
+  &::after {
+    content: " ";
+    flex-grow: 1;
+  }
+}
+
+form {
+  flex-basis: 20em;
+  margin-top: 2em;
+  > * {
+    margin-bottom: 1rem;
+  }
+
+  label {
+    display: block;
+    > * {
+      width: 100%;
+      margin-bottom: 0.5em;
+    }
+  }
+
+  button {
+    margin-top: 0.5em;
+  }
+
+  input,
+  button {
+    font: inherit;
+  }
+
+  .checking {
+    padding-left: 1em;
+  }
+
+  .error {
+    color: $color-red;
+  }
+}

@@ -1,6 +1,11 @@
-import m from "mithril";
-import TaskList from "./views/TaskList";
+const m = require("mithril");
+const TaskList = require("./views/TaskList");
+const Login = require("./views/Login");
 
-import "./style.scss";
+require("./style.scss");
 
-m.mount(document.body, TaskList);
+m.route.prefix = "";
+m.route(document.body, "/", {
+  "/": TaskList,
+  "/login": Login,
+});

@@ -1,8 +1,7 @@
 const { Datastore } = require("@google-cloud/datastore");
-const param = require("../../shared/param");
 
 const datastore = new Datastore();
-const queryTasks = datastore.createQuery([param.DATABASE_KIND.TASK]);
+const queryTasks = datastore.createQuery(["Task"]);
 
 module.exports = function(req, res) {
   datastore.runQuery(queryTasks, (err, entities) => {

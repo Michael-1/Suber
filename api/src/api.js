@@ -1,13 +1,20 @@
 const express = require("express");
-const cors = require("cors");
+const bodyParser = require("body-parser");
+const auth = require("./auth");
 const getTasks = require("./getTasks");
 const markAsDone = require("./markAsDone");
 
 const app = express();
-app.use(cors());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(auth.session);
+app.use(auth.passport.initialize());
+app.use(auth.passport.session());
 
-app.get("/tasks", getTasks);
-app.patch("/task/:key/done", markAsDone);
+app.post("/api/login", auth.authenticate);
+
+app.get("/api/tasks", auth.isAuthentic, getTasks);
+app.patch("/api/task/:key/done", auth.isAuthentic, markAsDone);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
