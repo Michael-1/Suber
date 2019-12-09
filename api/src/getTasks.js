@@ -1,17 +1,19 @@
-const { Datastore } = require("@google-cloud/datastore");
-
-const datastore = new Datastore();
-const queryTasks = datastore.createQuery(["Task"]);
+const { taskCollection } = require("./db");
 
 module.exports = function(req, res) {
-  datastore.runQuery(queryTasks, (err, entities) => {
-    if (err) {
+  taskCollection
+    .get()
+    .then(function(snapshot) {
+      const tasks = [];
+      for (let doc of snapshot.docs) {
+        const task = doc.data();
+        task.lastDone = task.lastDone.toDate();
+        task.key = doc.id;
+        tasks.push(task);
+      }
+      res.json(tasks);
+    })
+    .catch(function(err) {
       console.log(err);
-      return;
-    }
-    for (let entity of entities) {
-      entity.key = entity[datastore.KEY].name;
-    }
-    res.json(entities);
-  });
+    });
 };

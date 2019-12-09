@@ -1,12 +1,10 @@
 const expressSession = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
-const { Firestore } = require("@google-cloud/firestore");
 const { FirestoreStore } = require("@google-cloud/connect-firestore");
 const argon2 = require("argon2");
+const { database } = require("./db");
 require("dotenv").config();
-
-const database = new Firestore();
 
 const YEAR = 1000 * 60 * 60 * 24 * 365.2425;
 const session = expressSession({
@@ -17,7 +15,7 @@ const session = expressSession({
   resave: false,
   cookie: {
     maxAge: YEAR,
-    secure: process.env.NODE_ENV === "development" ? false : true,
+    secure: process.env.NODE_ENV === "development" ? false : true
   },
   saveUninitialized: false
 });

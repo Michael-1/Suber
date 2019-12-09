@@ -1,25 +1,21 @@
-const { Datastore } = require("@google-cloud/datastore");
+const { database, taskCollection } = require("./db");
 const { Task } = require("../../shared/model/Task");
 
-const datastore = new Datastore();
-
-module.exports = async function markAsDone(req, res) {
+module.exports = function markAsDone(req, res) {
   const currentTime = new Date();
-  const transaction = datastore.transaction();
-  const taskKey = datastore.key(["Task", req.params.key]);
-  try {
-    await transaction.run();
-    const [taskData] = await transaction.get(taskKey);
-    const task = new Task(taskData, currentTime);
-    taskData.lastDone = currentTime;
-    transaction.save([
-      {
-        key: taskKey,
-        data: taskData
-      }
-    ]);
-    transaction.commit();
-  } catch (e) {
-    transaction.rollback();
-  }
+
+  database.runTransaction(function(transaction) {
+    return transaction
+      .get(taskCollection.doc(req.params.key))
+      .then(function(doc) {
+        //const task = new Task(doc.data, currentTime);
+        transaction.update(doc.ref, { lastDone: currentTime });
+      })
+      .then(function() {
+        res.sendStatus(204);
+      })
+      .catch(function(err) {
+        res.sendStatus(500);
+      });
+  });
 };

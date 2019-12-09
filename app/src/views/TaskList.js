@@ -2,7 +2,7 @@ const m = require("mithril");
 const TaskComponent = require("../components/Task");
 const Task = require("../../../shared/model/Task");
 
-module.exports = {
+const TaskList = {
   list: [],
 
   oninit: function() {
@@ -13,7 +13,7 @@ module.exports = {
         type: Task,
       })
       .then(function(result) {
-        this.list = result;
+        TaskList.list = result;
       })
       .catch(function(error) {
         m.route.set("/login");
@@ -45,3 +45,5 @@ module.exports = {
     );
   },
 };
+
+module.exports = TaskList;

@@ -8,7 +8,6 @@
   },
   "dependencies": {
     "@google-cloud/connect-firestore": "^1.0.4",
-    "@google-cloud/datastore": "^4.5.2",
     "@google-cloud/firestore": "^2.6.0",
     "argon2": "^0.25.1",
     "bcrypt-nodejs": "0.0.3",
