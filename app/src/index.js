@@ -1,11 +1,11 @@
 const m = require("mithril");
-const TaskList = require("./views/TaskList");
+const Main = require("./views/Main");
 const Login = require("./views/Login");
 
 require("./style.scss");
 
 m.route.prefix = "";
 m.route(document.body, "/", {
-  "/": TaskList,
+  "/": Main,
   "/login": Login,
 });

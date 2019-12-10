@@ -1,4 +1,5 @@
 const m = require("mithril");
+const Balance = require("./Balance");
 
 const STATUS = {
   DONE: "DONE",
@@ -33,7 +34,9 @@ function Task(initialVnode) {
           <td>
             {task.room}: {task.object}
           </td>
-          <td colspan="5">{task.points.toFixed(2)} Punkte gutgeschrieben</td>
+          <td colspan="5">
+            {task.pointsCredited.toFixed(2)} Punkte gutgeschrieben
+          </td>
         </tr>
       );
     },
@@ -45,7 +48,8 @@ function Task(initialVnode) {
         params: { key: this.key },
       }).then(res => {
         this.status = STATUS.DONE;
-        this.points = res.points;
+        this.pointsCredited = res.points;
+        Balance.addPoints(res.points);
       });
     },
   };

@@ -16,7 +16,9 @@ const TaskList = {
         TaskList.list = result;
       })
       .catch(function(error) {
-        m.route.set("/login");
+        if (error.code === 401) {
+          m.route.set("/login");
+        }
       });
   },
 
