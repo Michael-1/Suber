@@ -1,4 +1,5 @@
 const m = require("mithril");
+const store = require("../store");
 const Balance = require("./Balance");
 
 const STATUS = {
@@ -6,10 +7,16 @@ const STATUS = {
 };
 
 function Task(initialVnode) {
-  state = initialVnode;
+  users = initialVnode;
   return {
     view: function(vnode) {
       const task = vnode.attrs;
+      const numberOfothers = store.users.others
+        ? store.users.others.length
+        : null;
+      const actualPointsMultiplier =
+        (store.settings.pointNormaliser * numberOfothers) /
+        (numberOfothers + 1);
       if (task.status !== STATUS.DONE)
         return (
           <tr>
@@ -22,7 +29,10 @@ function Task(initialVnode) {
               {("00" + (task.lastDone.getMonth() + 1)).slice(-2)}.
             </td>
             <td>{task.urgency.toFixed(1)}</td>
-            <td>{task.points.toFixed(2)}</td>
+            <td>
+              {actualPointsMultiplier &&
+                (task.points * actualPointsMultiplier).toFixed(2)}
+            </td>
             <td>
               <button onclick={this.markAsDone.bind(task)}>Erledigt</button>
             </td>
@@ -35,7 +45,9 @@ function Task(initialVnode) {
             {task.room}: {task.object}
           </td>
           <td colspan="5">
-            {task.pointsCredited.toFixed(2)} Punkte gutgeschrieben
+            {actualPointsMultiplier &&
+              (task.pointsCredited * actualPointsMultiplier).toFixed(2)}{" "}
+            Punkte gutgeschrieben
           </td>
         </tr>
       );
@@ -43,7 +55,7 @@ function Task(initialVnode) {
 
     markAsDone: function() {
       m.request({
-        method: "PATCH",
+        method: "POST",
         url: "/api/task/:key/done",
         params: { key: this.key },
       }).then(res => {

@@ -8,4 +8,5 @@ module.exports = {
   taskCollection: database.collection("Task"),
   userCollection: database.collection("User"),
   journalCollection: database.collection("Journal"),
+  projectCollection: database.collection("Project"),
 };

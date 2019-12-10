@@ -3,31 +3,37 @@ const {
   database,
   taskCollection,
   userCollection,
-  journalCollection
+  journalCollection,
+  projectCollection,
 } = require("./db");
 const Task = require("../../shared/model/Task");
+
+const projectDocRef = projectCollection.doc("parameters");
 
 module.exports = function markAsDone(req, res) {
   const currentTime = new Date();
   const taskDocRef = taskCollection.doc(req.params.key);
   const userDocRef = userCollection.doc(req.user);
-  database
-    .runTransaction(function(transaction) {
-      return transaction.get(taskDocRef).then(function(taskDoc) {
-        transaction.update(taskDoc.ref, { lastDone: currentTime });
-        return taskDoc.data();
-      });
-    })
-    .then(function(taskData) {
+  const task = database.runTransaction(function(transaction) {
+    return transaction.get(taskDocRef).then(function(taskDoc) {
+      transaction.update(taskDoc.ref, { lastDone: currentTime });
+      return taskDoc.data();
+    });
+  });
+  const pointNormaliser = database.get(projectDocRef);
+  Promise.all([task, pointNormaliser])
+    .then(function(snapshot) {
+      const taskData = snapshot[0];
       taskData.lastDone = taskData.lastDone.toDate();
       const task = new Task(taskData, currentTime);
-      res.json({ points: task.points });
-      userDocRef.update("points", Firestore.FieldValue.increment(task.points));
+      const points = task.points * snapshot[1].pointNormaliser;
+      res.json({ points });
+      userDocRef.update("points", Firestore.FieldValue.increment(points));
       journalCollection.add({
         time: currentTime,
         user: req.user,
         task: req.params.key,
-        points: task.points
+        points,
       });
     })
     .catch(function(err) {

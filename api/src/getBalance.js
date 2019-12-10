@@ -5,7 +5,7 @@ module.exports = function(req, res) {
     .get()
     .then(function(snapshot) {
       let you;
-      const otherUsers = [];
+      const others = [];
       let totalPoints = 0;
       for (let doc of snapshot.docs) {
         const points = doc.get("points") || 0;
@@ -16,11 +16,11 @@ module.exports = function(req, res) {
         if (doc.id === req.user) {
           you = user;
         } else {
-          otherUsers.push(user);
+          others.push(user);
         }
         totalPoints += points;
       }
-      res.json({ you, otherUsers, totalPoints });
+      res.json({ you, others, totalPoints });
     })
     .catch(function(err) {
       console.log(err);

@@ -1,10 +1,9 @@
 const m = require("mithril");
+const store = require("../store");
 const TaskComponent = require("../components/Task");
 const Task = require("../../../shared/model/Task");
 
-const TaskList = {
-  list: [],
-
+module.exports = {
   oninit: function() {
     return m
       .request({
@@ -13,7 +12,7 @@ const TaskList = {
         type: Task,
       })
       .then(function(result) {
-        TaskList.list = result;
+        store.tasks = result;
       })
       .catch(function(error) {
         if (error.code === 401) {
@@ -38,7 +37,7 @@ const TaskList = {
             </tr>
           </thead>
           <tbody>
-            {this.list.map(task => {
+            {store.tasks.map(task => {
               return m(TaskComponent, task);
             })}
           </tbody>
@@ -47,5 +46,3 @@ const TaskList = {
     );
   },
 };
-
-module.exports = TaskList;

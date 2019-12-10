@@ -1,8 +1,9 @@
 const m = require("mithril");
+const store = require("../store");
 const formatNumber = require("../helpers/formatNumber");
 
-const Balance = {
-  state: {},
+module.exports = {
+  users: {},
 
   oninit: function() {
     return m
@@ -11,7 +12,7 @@ const Balance = {
         url: "/api/balance",
       })
       .then(function(result) {
-        Balance.state = result;
+        store.users = result;
       })
       .catch(function(error) {
         if (error.code === 401) {
@@ -21,20 +22,20 @@ const Balance = {
   },
 
   addPoints: function(points) {
-    Balance.state.you.points += points;
-    Balance.state.totalPoints += points;
+    store.users.you.points += points;
+    store.users.totalPoints += points;
   },
 
   view: function() {
-    if (!Balance.state.you) {
+    if (!store.users.you) {
       return;
     }
     const meanPoints =
-      Balance.state.totalPoints / (Balance.state.otherUsers.length + 1);
+      store.users.totalPoints / (store.users.others.length + 1);
     return (
       <div>
-        <div>Du: {formatNumber(Balance.state.you.points - meanPoints, 2)}</div>
-        {Balance.state.otherUsers.map(user => {
+        <div>Du: {formatNumber(store.users.you.points - meanPoints, 2)}</div>
+        {store.users.others.map(user => {
           return (
             <div>
               {user.name}: {formatNumber(user.points - meanPoints, 2)}
@@ -45,5 +46,3 @@ const Balance = {
     );
   },
 };
-
-module.exports = Balance;
