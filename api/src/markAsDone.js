@@ -21,13 +21,15 @@ module.exports = function markAsDone(req, res) {
     });
   });
   const pointNormaliser = database.get(projectDocRef);
+  const pointNormaliser = projectDocRef.get(projectDocRef);
   Promise.all([task, pointNormaliser])
     .then(function(snapshot) {
       const taskData = snapshot[0];
       taskData.lastDone = taskData.lastDone.toDate();
       const task = new Task(taskData, currentTime);
-      const points = task.points * snapshot[1].pointNormaliser;
+      const points = task.points * snapshot[1].get("pointNormaliser");
       res.json({ points });
+      if (points == 0) return;
       userDocRef.update("points", Firestore.FieldValue.increment(points));
       journalCollection.add({
         time: currentTime,

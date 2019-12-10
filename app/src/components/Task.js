@@ -14,9 +14,7 @@ function Task(initialVnode) {
       const numberOfothers = store.users.others
         ? store.users.others.length
         : null;
-      const actualPointsMultiplier =
-        (store.settings.pointNormaliser * numberOfothers) /
-        (numberOfothers + 1);
+      const actualPointsMultiplier = numberOfothers / (numberOfothers + 1);
       if (task.status !== STATUS.DONE)
         return (
           <tr>
@@ -31,7 +29,11 @@ function Task(initialVnode) {
             <td>{task.urgency.toFixed(1)}</td>
             <td>
               {actualPointsMultiplier &&
-                (task.points * actualPointsMultiplier).toFixed(2)}
+                (
+                  task.points *
+                  actualPointsMultiplier *
+                  store.settings.pointNormaliser
+                ).toFixed(2)}
             </td>
             <td>
               <button onclick={this.markAsDone.bind(task)}>Erledigt</button>
