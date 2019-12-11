@@ -1,9 +1,16 @@
+@import "../variables";
+
 .task-list {
   border-collapse: collapse;
 
   td {
     vertical-align: baseline;
     padding: 0.5em;
+  }
+
+  .done {
+    background-color: $color-green-background;
+    transition: background-color 1s;
   }
 
   .room {
@@ -16,5 +23,9 @@
   .points {
     text-align: right;
     font-variant-numeric: tabular-nums;
+  }
+
+  button {
+    width: 100%;
   }
 }
