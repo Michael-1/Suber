@@ -1,5 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const FaviconsWebpackPlugin = require("favicons-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
@@ -23,6 +24,19 @@ module.exports = {
     new HtmlWebpackPlugin({
       meta: { viewport: "width=device-width" },
       title: "Suber",
+    }),
+    new FaviconsWebpackPlugin({
+      logo: "./logo.svg",
+      devMode: "webapp",
+      favicons: {
+        appName: "Suber",
+        appleStatusBarStyle: "default"
+        icons: {
+          coast: false,
+          firefox: false,
+          yandex: false,
+        },
+      },
     }),
     new MiniCssExtractPlugin({
       filename: "style.css",
