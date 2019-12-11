@@ -1,8 +1,26 @@
 body {
   font-family: system-ui, sans-serif;
   line-height: 1.4;
+  display: flex;
+  margin: 0;
+  &::before {
+    content: " ";
+    flex-grow: 1;
+  }
+  &::after {
+    content: " ";
+    flex-grow: 1;
+  }
+  > * > * {
+    margin: 2em 0;
+  }
 }
 
 * {
   box-sizing: border-box;
+}
+
+input,
+button {
+  font: inherit;
 }

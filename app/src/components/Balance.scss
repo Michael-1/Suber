@@ -1,0 +1,30 @@
+$padding: 0.3em;
+
+.balance {
+  border-collapse: collapse;
+  width: 100%;
+  font-variant-numeric: proportional-nums;
+  td {
+    width: 50%;
+    padding: $padding 0;
+    span {
+      padding: 0 $padding;
+    }
+    .bar {
+      display: inline-block;
+      text-align: right;
+      background-color: #00cb00;
+      transition: width 1s;
+    }
+    &:first-child {
+      border-right: 0.5px solid;
+      text-align: right;
+      .bar {
+        float: right;
+        direction: rtl;
+        text-align: left;
+        background-color: #ff6161;
+      }
+    }
+  }
+}

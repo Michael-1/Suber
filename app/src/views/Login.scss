@@ -1,16 +1,7 @@
 @import "../variables";
 
-body {
+.form-container {
   margin: 1em;
-  display: flex;
-  &::before {
-    content: " ";
-    flex-grow: 1;
-  }
-  &::after {
-    content: " ";
-    flex-grow: 1;
-  }
 }
 
 form {
@@ -30,11 +21,6 @@ form {
 
   button {
     margin-top: 0.5em;
-  }
-
-  input,
-  button {
-    font: inherit;
   }
 
   .checking {

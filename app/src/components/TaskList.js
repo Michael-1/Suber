@@ -12,7 +12,7 @@ module.exports = {
         type: Task,
       })
       .then(function(result) {
-        store.tasks = result;
+        store.tasks = result.sort((a, b) => b.urgency - a.urgency);
       })
       .catch(function(error) {
         if (error.code === 401) {
@@ -23,26 +23,11 @@ module.exports = {
 
   view: function() {
     return (
-      <div>
-        <h1>Tasks</h1>
-        <table>
-          <thead>
-            <tr>
-              <th>Aufgabe</th>
-              <th>Freq.</th>
-              <th>Zuletzt</th>
-              <th>Dringlichkeit</th>
-              <th>Punkte</th>
-              <th>Aktion</th>
-            </tr>
-          </thead>
-          <tbody>
-            {store.tasks.map(task => {
-              return m(TaskComponent, task);
-            })}
-          </tbody>
-        </table>
-      </div>
+      <table class="task-list">
+        {store.tasks.map(task => {
+          return m(TaskComponent, task);
+        })}
+      </table>
     );
   },
 };

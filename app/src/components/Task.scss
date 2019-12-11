@@ -1,0 +1,20 @@
+.task-list {
+  border-collapse: collapse;
+
+  td {
+    vertical-align: baseline;
+    padding: 0.5em;
+  }
+
+  .room {
+    font-weight: 500;
+    &::after {
+      content: ": ";
+    }
+  }
+
+  .points {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+}

@@ -2,6 +2,8 @@ const m = require("mithril");
 const store = require("../store");
 const Balance = require("./Balance");
 
+require("./Task.scss");
+
 const STATUS = {
   DONE: "DONE",
 };
@@ -11,23 +13,22 @@ function Task(initialVnode) {
   return {
     view: function(vnode) {
       const task = vnode.attrs;
-      const numberOfothers = store.users.others
-        ? store.users.others.length
-        : null;
-      const actualPointsMultiplier = numberOfothers / (numberOfothers + 1);
+      const numberOfUsers = store.users.length;
+      const actualPointsMultiplier = (numberOfUsers - 1) / numberOfUsers;
       if (task.status !== STATUS.DONE)
         return (
-          <tr>
+          <tr
+            style={
+              task.urgency > 1 &&
+              `background-color:rgb(255,97,97,${(task.urgency - 1) /
+                (store.tasks[0].urgency - 1)})`
+            }
+          >
             <td>
-              {task.room}: {task.object}
+              <span class="room">{task.room}</span>
+              <span class="object">{task.object}</span>
             </td>
-            <td>{task.frequency}</td>
-            <td>
-              {("00" + task.lastDone.getDate()).slice(-2)}.
-              {("00" + (task.lastDone.getMonth() + 1)).slice(-2)}.
-            </td>
-            <td>{task.urgency.toFixed(1)}</td>
-            <td>
+            <td class="points">
               {actualPointsMultiplier &&
                 (
                   task.points *
@@ -62,7 +63,7 @@ function Task(initialVnode) {
         params: { key: this.key },
       }).then(res => {
         this.status = STATUS.DONE;
-        this.pointsCredited = res.points;
+        this.points = res.points;
         Balance.addPoints(res.points);
       });
     },

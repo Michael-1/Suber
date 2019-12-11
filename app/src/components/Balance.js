@@ -1,6 +1,6 @@
 const m = require("mithril");
 const store = require("../store");
-const formatNumber = require("../helpers/formatNumber");
+require("./Balance.scss");
 
 module.exports = {
   users: {},
@@ -46,16 +46,39 @@ module.exports = {
       if (absPoints > maxAbsPoints) maxAbsPoints = absPoints;
     }
     return (
-      <div>
-        <div>Du: {formatNumber(store.users.you.points - meanPoints, 2)}</div>
-        {store.users.others.map(user => {
+      <table class="balance">
+        {store.users.map(user => {
+          const points = user.points - meanPoints;
+          const barWidth = (points / maxAbsPoints) * 100;
           return (
-            <div>
-              {user.name}: {formatNumber(user.points - meanPoints, 2)}
-            </div>
+            <tr>
+              <td>
+                {points >= 0 && <span>{user.name}</span>}
+                <div
+                  class="bar"
+                  style={`width:${barWidth < 0 ? -barWidth : 0}%`}
+                >
+                  <span>{points < 0 && formatBalanceNumber(points, 2)}</span>
+                </div>
+              </td>
+              <td>
+                <div
+                  class="bar"
+                  style={`width:${barWidth > 0 ? barWidth : 0}%`}
+                >
+                  <span>{points >= 0 && formatBalanceNumber(points, 2)} </span>
+                </div>
+                {points < 0 && <span>{user.name}</span>}
+              </td>
+            </tr>
           );
         })}
-      </div>
+      </table>
     );
   },
 };
+
+function formatBalanceNumber(number, precision) {
+  if (number >= 0) return "+" + number.toFixed(0);
+  return "" + (-number).toFixed(0) + "−";
+}

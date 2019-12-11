@@ -15,48 +15,50 @@ const login = {
 
   view: function() {
     return (
-      <form action="#" onsubmit={this.submit}>
-        <label>
-          <div>E-Mail-Adresse</div>
-          <input
-            inputmode="email"
+      <div class="form-container">
+        <form action="#" onsubmit={this.submit}>
+          <label>
+            <div>E-Mail-Adresse</div>
+            <input
+              inputmode="email"
               autocapitalize="off"
-            onchange={function(e) {
+              onchange={function(e) {
                 login.credentials.username = e.currentTarget.value
                   .trim()
                   .toLowerCase();
-            }}
-            oninput={function(e) {
-              login.status = STATUS.FRESH;
-            }}
-            required
-          />
-        </label>
-        <label>
-          <div>Passwort</div>
-          <input
-            type="password"
-            onchange={function(e) {
-              login.credentials.password = e.currentTarget.value;
-            }}
-            oninput={() => {
-              login.status = STATUS.FRESH;
-            }}
-          />
-        </label>
-        {this.status === STATUS.INVALID && (
-          <div aria-live="assertive" class="error">
-            Falsches Passwort oder unbekannte E-Mail-Adresse
-          </div>
-        )}
-        <button type="submit">Anmelden</button>
-        {this.status === STATUS.CHECKING && (
-          <span aria-live="polite" class="checking">
-            Überprüfe&nbsp;
-            <Loader />
-          </span>
-        )}
-      </form>
+              }}
+              oninput={function(e) {
+                login.status = STATUS.FRESH;
+              }}
+              required
+            />
+          </label>
+          <label>
+            <div>Passwort</div>
+            <input
+              type="password"
+              onchange={function(e) {
+                login.credentials.password = e.currentTarget.value;
+              }}
+              oninput={() => {
+                login.status = STATUS.FRESH;
+              }}
+            />
+          </label>
+          {this.status === STATUS.INVALID && (
+            <div aria-live="assertive" class="error">
+              Falsches Passwort oder unbekannte E-Mail-Adresse
+            </div>
+          )}
+          <button type="submit">Anmelden</button>
+          {this.status === STATUS.CHECKING && (
+            <span aria-live="polite" class="checking">
+              Überprüfe&nbsp;
+              <Loader />
+            </span>
+          )}
+        </form>
+      </div>
     );
   },
 
