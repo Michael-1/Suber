@@ -6,30 +6,31 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 module.exports = {
   mode: "development",
   entry: {
-    app: "./src/index.js"
+    app: "./src/index.js",
   },
   devServer: {
     historyApiFallback: true,
     proxy: {
       "/api": {
-        target: "http://localhost:8080"
-      }
+        target: "http://localhost:8080",
+      },
     },
-    host: "0.0.0.0"
+    host: "0.0.0.0",
   },
   devtool: "source-map",
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      meta: { viewport: "width=device-width" }
+      meta: { viewport: "width=device-width" },
+      title: "Suber",
     }),
     new MiniCssExtractPlugin({
-      filename: "style.css"
-    })
+      filename: "style.css",
+    }),
   ],
   output: {
     filename: "[name].bundle.js",
-    path: path.resolve(__dirname, "dist")
+    path: path.resolve(__dirname, "dist"),
   },
   module: {
     rules: [
@@ -37,14 +38,14 @@ module.exports = {
         test: /\.js$/,
         exclude: /\/node_modules\//,
         use: {
-          loader: "babel-loader"
-        }
+          loader: "babel-loader",
+        },
       },
       {
         test: /\.s?css$/,
         exclude: /\/node_modules\//,
-        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]
-      }
-    ]
-  }
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+      },
+    ],
+  },
 };
