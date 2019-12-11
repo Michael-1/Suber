@@ -4,23 +4,16 @@ module.exports = function(req, res) {
   userCollection
     .get()
     .then(function(snapshot) {
-      let you;
-      const others = [];
-      let totalPoints = 0;
+      const users = [];
       for (let doc of snapshot.docs) {
-        const points = doc.get("points") || 0;
-        const user = {
+        users.push({
           name: doc.get("name"),
-          points,
-        };
-        if (doc.id === req.user) {
-          you = user;
-        } else {
-          others.push(user);
-        }
-        totalPoints += points;
+          points: doc.get("points") || 0,
+          key: doc.id,
+          currentUser: doc.id === req.user,
+        });
       }
-      res.json({ you, others, totalPoints });
+      res.json(users);
     })
     .catch(function(err) {
       console.log(err);

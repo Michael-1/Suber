@@ -12,7 +12,11 @@ module.exports = {
         url: "/api/balance",
       })
       .then(function(result) {
-        store.users = result;
+        store.users = result.sort((a, b) => {
+          if (a.currentUser) return -1;
+          if (b.currentUser) return 1;
+          return b.points - a.points;
+        });
       })
       .catch(function(error) {
         if (error.code === 401) {
@@ -22,16 +26,25 @@ module.exports = {
   },
 
   addPoints: function(points) {
-    store.users.you.points += points;
-    store.users.totalPoints += points;
+    store.users.find(u => u.currentUser).points += points;
   },
 
   view: function() {
-    if (!store.users.you) {
+    if (!store.users.length) {
       return;
     }
-    const meanPoints =
-      store.users.totalPoints / (store.users.others.length + 1);
+    let totalPoints = 0;
+    for (user of store.users) {
+      totalPoints += user.points;
+      const absPoints = Math.abs(user.points);
+      if (absPoints > maxAbsPoints) maxAbsPoints = absPoints;
+    }
+    const meanPoints = totalPoints / store.users.length;
+    let maxAbsPoints = 0;
+    for (user of store.users) {
+      const absPoints = Math.abs(user.points - meanPoints);
+      if (absPoints > maxAbsPoints) maxAbsPoints = absPoints;
+    }
     return (
       <div>
         <div>Du: {formatNumber(store.users.you.points - meanPoints, 2)}</div>
