@@ -17,7 +17,7 @@ function Task(initialVnode) {
     view: function(vnode) {
       const task = vnode.attrs;
       const numberOfUsers = store.users.length;
-      const actualPointsMultiplier = (numberOfUsers - 1) / numberOfUsers;
+      const balanceChangeFactor = (numberOfUsers - 1) / numberOfUsers;
       // Initial
       return (
         <tr
@@ -34,11 +34,13 @@ function Task(initialVnode) {
             <span class="object">{task.object}</span>
           </td>
           <td class="points">
-            {actualPointsMultiplier &&
+            {balanceChangeFactor &&
               (
                 task.points *
-                actualPointsMultiplier *
-                store.settings.pointNormaliser
+                balanceChangeFactor *
+                (task.status !== STATUS.DONE
+                  ? store.settings.pointNormaliser
+                  : 1)
               ).toFixed(2)}
           </td>
           <td>
