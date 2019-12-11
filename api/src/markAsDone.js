@@ -20,7 +20,6 @@ module.exports = function markAsDone(req, res) {
       return taskDoc.data();
     });
   });
-  const pointNormaliser = database.get(projectDocRef);
   const pointNormaliser = projectDocRef.get(projectDocRef);
   Promise.all([task, pointNormaliser])
     .then(function(snapshot) {
