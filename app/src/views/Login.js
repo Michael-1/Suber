@@ -20,8 +20,11 @@ const login = {
           <div>E-Mail-Adresse</div>
           <input
             inputmode="email"
+              autocapitalize="off"
             onchange={function(e) {
-              login.credentials.username = e.currentTarget.value.trim();
+                login.credentials.username = e.currentTarget.value
+                  .trim()
+                  .toLowerCase();
             }}
             oninput={function(e) {
               login.status = STATUS.FRESH;
