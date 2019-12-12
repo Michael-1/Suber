@@ -1,6 +1,6 @@
 @import "../variables";
 
-$padding: 0.3em;
+$balance-padding: 0.3em;
 
 .balance {
   border-collapse: collapse;
@@ -8,9 +8,9 @@ $padding: 0.3em;
   font-variant-numeric: proportional-nums;
   td {
     width: 50%;
-    padding: $padding 0;
+    padding: $balance-padding 0;
     span {
-      padding: 0 $padding;
+      padding: 0 $balance-padding;
     }
     .bar {
       display: inline-block;
@@ -21,12 +21,16 @@ $padding: 0.3em;
     &:first-child {
       border-right: 0.5px solid;
       text-align: right;
+      padding-left: $padding;
       .bar {
         float: right;
         direction: rtl;
         text-align: left;
         background-color: $color-red-background;
       }
+    }
+    &:last-child {
+      padding-right: $padding;
     }
   }
 }
