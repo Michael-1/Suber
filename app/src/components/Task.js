@@ -34,7 +34,8 @@ function Task(initialVnode) {
             <span class="object">{task.object}</span>
           </td>
           <td class="points">
-            {balanceChangeFactor &&
+            {numberOfUsers &&
+              store.settings.pointNormaliser &&
               (
                 task.points *
                 balanceChangeFactor *

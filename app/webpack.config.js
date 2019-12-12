@@ -22,8 +22,9 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      meta: { viewport: "width=device-width" },
       title: "Suber",
+      meta: { viewport: "width=device-width" },
+      template: "src/index.html",
     }),
     new FaviconsWebpackPlugin({
       logo: "./sponge.svg",
@@ -50,14 +51,17 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /\/node_modules\//,
-        use: {
-          loader: "babel-loader",
-        },
+        use: "babel-loader",
       },
       {
         test: /\.s?css$/,
         exclude: /\/node_modules\//,
         use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+      },
+      {
+        test: /\.html$/,
+        exclude: /\/node_modules\//,
+        use: "html-loader",
       },
     ],
   },
