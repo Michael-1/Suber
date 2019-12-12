@@ -26,11 +26,10 @@ module.exports = {
       title: "Suber",
     }),
     new FaviconsWebpackPlugin({
-      logo: "./logo.svg",
-      devMode: "webapp",
+      logo: "./sponge.svg",
       favicons: {
         appName: "Suber",
-        appleStatusBarStyle: "default"
+        appleStatusBarStyle: "default",
         icons: {
           coast: false,
           firefox: false,
