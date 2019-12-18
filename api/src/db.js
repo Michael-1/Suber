@@ -1,6 +1,11 @@
 const { Firestore } = require("@google-cloud/firestore");
 
-const database = new Firestore();
+const database = new Firestore({
+  projectId:
+    process.env.NODE_ENV === "development"
+      ? "super-dev-261813"
+      : "suber-256519",
+});
 
 module.exports = {
   Firestore,

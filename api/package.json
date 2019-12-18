@@ -4,6 +4,7 @@
   "license": "GPL-3.0",
   "repository": "https://github.com/Michael-1/Suber.git",
   "scripts": {
+    "dev": "nodemon src/api.js",
     "start": "node src/api.js"
   },
   "dependencies": {
