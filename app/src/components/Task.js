@@ -42,7 +42,7 @@ function Task(initialVnode) {
                 (task.status !== STATUS.DONE
                   ? store.settings.pointNormaliser
                   : 1)
-              ).toFixed(2)}
+              ).toFixed(0)}
           </td>
           <td>
             <button
