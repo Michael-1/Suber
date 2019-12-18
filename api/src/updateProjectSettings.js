@@ -8,7 +8,7 @@ module.exports = function(req, res) {
     }
   });
   const pointNormaliser = Promise.all([
-    taskCollection.get(),
+    userCollection.get(),
     taskCollection.get(),
   ]).then(function(snapshot) {
     const numberOfUsers = snapshot[0].docs.length;
