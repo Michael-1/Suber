@@ -9,15 +9,16 @@ require("dotenv").config();
 const YEAR = 1000 * 60 * 60 * 24 * 365.2425;
 const session = expressSession({
   store: new FirestoreStore({
-    dataset: database
+    dataset: database,
   }),
+  name: "__session",
   secret: process.env.SESSION_SECRET,
   resave: false,
   cookie: {
     maxAge: YEAR,
-    secure: process.env.NODE_ENV === "development" ? false : true
+    secure: process.env.NODE_ENV === "development" ? false : true,
   },
-  saveUninitialized: false
+  saveUninitialized: false,
 });
 
 passport.use(
@@ -30,7 +31,9 @@ passport.use(
       .then(function(snapshot) {
         if (snapshot.empty) return invalidCredentials(done, startTime);
         const user = snapshot.docs[0];
+        var start = new Date();
         argon2.verify(user.get("password"), password).then(function(same) {
+          console.debug(`Argon2 runtime: ${new Date() - start}ms`);
           if (same) return done(null, user.id);
           return invalidCredentials(done, startTime);
         });
@@ -72,5 +75,5 @@ module.exports = {
   session,
   passport,
   authenticate,
-  isAuthentic
+  isAuthentic,
 };

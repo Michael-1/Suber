@@ -6,7 +6,7 @@ const {
   journalCollection,
   projectCollection,
 } = require("./db");
-const Task = require("../../shared/model/Task");
+const Task = require("./model/Task");
 
 const projectDocRef = projectCollection.doc("parameters");
 

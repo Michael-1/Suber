@@ -10,6 +10,7 @@ const updateProjectSettings = require("./updateProjectSettings");
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.set("trust proxy", 1);
 app.use(auth.session);
 app.use(auth.passport.initialize());
 app.use(auth.passport.session());
@@ -22,7 +23,7 @@ app.get("/api/settings", auth.isAuthentic, getSettings);
 app.post("/api/task/:key/done", auth.isAuthentic, markAsDone);
 app.patch("/api/settings", auth.isAuthentic, updateProjectSettings);
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT} …`);
 });

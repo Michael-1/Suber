@@ -50,13 +50,15 @@ const login = {
               Falsches Passwort oder unbekannte E-Mail-Adresse
             </div>
           )}
-          <button type="submit">Anmelden</button>
-          {this.status === STATUS.CHECKING && (
-            <span aria-live="polite" class="checking">
-              Überprüfe&nbsp;
-              <Loader />
-            </span>
-          )}
+          <div>
+            <button type="submit">Anmelden</button>
+            {this.status === STATUS.CHECKING && (
+              <span aria-live="polite" class="checking">
+                Überprüfe&nbsp;
+                <Loader />
+              </span>
+            )}
+          </div>
         </form>
       </div>
     );

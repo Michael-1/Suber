@@ -2,7 +2,7 @@ const m = require("mithril");
 const store = require("../store");
 const TaskComponent = require("../components/Task");
 const Loader = require("../components/Loader");
-const Task = require("../../../shared/model/Task");
+const Task = require("../model/Task");
 
 module.exports = {
   error: false,
