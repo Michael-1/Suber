@@ -79,6 +79,7 @@ module.exports = {
 };
 
 function formatBalanceNumber(number, precision) {
+  if (number < 0.5 && number > -0.5) return number.toFixed(0);
   if (number >= 0) return "+" + number.toFixed(0);
   return "" + (-number).toFixed(0) + "−";
 }
