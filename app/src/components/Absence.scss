@@ -1,0 +1,61 @@
+@import "../variables";
+
+.absence-list {
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+  width: 100%;
+  padding: $padding;
+
+  td {
+    vertical-align: baseline;
+    padding: $padding;
+  }
+
+  .points {
+    text-align: right;
+  }
+
+  .new {
+    animation-duration: 5s;
+    animation-name: new-absence;
+  }
+}
+
+@keyframes new-absence {
+  from {
+    background-color: $color-green-background;
+  }
+
+  to {
+    background-color: white;
+  }
+}
+
+.add-absence {
+  width: 100%;
+  > form {
+    padding: $padding;
+    border: 1px solid $color-border;
+    border-radius: $border-radius;
+    width: 21em;
+    max-width: 100%;
+    font-variant-numeric: tabular-nums;
+    > * {
+      display: flex;
+      align-items: baseline;
+      .stretch {
+        flex-grow: 1;
+      }
+    }
+    input {
+      flex-grow: 1;
+      flex-basis: 0;
+    }
+    button {
+      min-width: 9em;
+    }
+    .success {
+      margin-top: $padding;
+    }
+  }
+}

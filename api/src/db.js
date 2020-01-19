@@ -10,8 +10,8 @@ const database = new Firestore({
 module.exports = {
   Firestore,
   database,
-  taskCollection: database.collection("Task"),
-  userCollection: database.collection("User"),
   journalCollection: database.collection("Journal"),
   projectCollection: database.collection("Project"),
+  taskCollection: database.collection("Task"),
+  userCollection: database.collection("User"),
 };

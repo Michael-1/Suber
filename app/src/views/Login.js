@@ -15,7 +15,7 @@ const login = {
 
   view: function() {
     return (
-      <div class="form-container">
+      <main class="login-form">
         <form action="#" onsubmit={this.submit}>
           <label>
             <div>E-Mail-Adresse</div>
@@ -60,7 +60,7 @@ const login = {
             )}
           </div>
         </form>
-      </div>
+      </main>
     );
   },
 

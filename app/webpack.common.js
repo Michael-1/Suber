@@ -45,6 +45,14 @@ module.exports = {
         exclude: /\/node_modules\//,
         use: "html-loader",
       },
+      {
+        test: /\.svg$/,
+        exclude: /\/node_modules\//,
+        use: {
+          loader: "file-loader",
+          options: { outputPath: "assets", esModule: false },
+        },
+      },
     ],
   },
 };

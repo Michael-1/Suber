@@ -1,5 +1,6 @@
 const m = require("mithril");
 const store = require("../store");
+const { formatPoints } = require("../helpers/Formatting");
 const Balance = require("./Balance");
 const Loader = require("./Loader");
 
@@ -36,13 +37,13 @@ function Task(initialVnode) {
           <td class="points">
             {numberOfUsers &&
               store.settings.pointNormaliser &&
-              (
+              formatPoints(
                 task.points *
-                balanceChangeFactor *
-                (task.status !== STATUS.DONE
-                  ? store.settings.pointNormaliser
-                  : 1)
-              ).toFixed(0)}
+                  balanceChangeFactor *
+                  (task.status !== STATUS.DONE
+                    ? store.settings.pointNormaliser
+                    : 1)
+              )}
           </td>
           <td>
             <button

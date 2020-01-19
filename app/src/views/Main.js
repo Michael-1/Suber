@@ -3,10 +3,6 @@ const store = require("../store");
 const Balance = require("../components/Balance");
 const TaskList = require("../components/TaskList");
 
-const STATUS = {
-  LOADING: "LOADING",
-};
-
 module.exports = {
   oninit: function() {
     return m
@@ -27,8 +23,22 @@ module.exports = {
   view: function() {
     return (
       <div>
-        <Balance />
-        <TaskList />
+        <nav class="right">
+          <div class="icon">
+            {m(
+              "a[href='/absences']",
+              { config: m.route },
+              <img
+                src={require("../assets/away.svg")}
+                title="Längere Abwesenheiten"
+              />
+            )}
+          </div>
+        </nav>
+        <main>
+          <Balance />
+          <TaskList />
+        </main>
       </div>
     );
   },

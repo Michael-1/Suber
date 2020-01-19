@@ -31,6 +31,7 @@
     "webpack-merge": "^4.2.2"
   },
   "devDependencies": {
+    "file-loader": "^5.0.2",
     "webpack-dev-server": "^3.9.0"
   }
 }

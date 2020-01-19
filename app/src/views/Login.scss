@@ -1,28 +1,24 @@
-.form-container {
+.login-form {
   margin: 1em;
   flex-basis: 20em;
-}
 
-form {
-  flex-basis: 20em;
-  margin-top: 2em;
-  > * {
-    margin-bottom: 1rem;
-  }
-
-  label {
-    display: block;
+  form {
+    flex-basis: 20em;
+    margin-top: 2em;
     > * {
-      width: 100%;
-      margin-bottom: 0.5em;
+      margin-bottom: 1rem;
     }
-  }
 
-  button {
-    margin-top: 0.5em;
-  }
+    label {
+      display: block;
+      > * {
+        width: 100%;
+        margin-bottom: 0.5em;
+      }
+    }
 
-  .checking {
-    padding-left: 1em;
+    .checking {
+      padding-left: 1em;
+    }
   }
 }

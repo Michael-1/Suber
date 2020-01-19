@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs/>
+  <path fill="none" stroke="#000" stroke-dasharray="5 7" stroke-dashoffset="11.3" stroke-linecap="round" stroke-width="5" d="M41 44C19 55 19 75 22 95h56c3-20 3-40-19-51"/>
+  <path fill="none" stroke="#000" stroke-dasharray="5 7" stroke-dashoffset="3.8" stroke-linecap="round" stroke-width="5" d="M59 44c19-18 7-39-9-39s-28 21-9 39"/>
+</svg>

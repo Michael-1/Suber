@@ -3,18 +3,17 @@
 body {
   font-family: system-ui, "Segoe UI", sans-serif;
   line-height: 1.4;
-  display: flex;
   margin: 0;
-  &::before {
-    content: " ";
-    flex-grow: 1;
-  }
-  &::after {
-    content: " ";
-    flex-grow: 1;
-  }
-  > * > * {
-    margin: 2em 0;
+  margin-top: $padding;
+}
+
+main {
+  margin: auto;
+  width: max-content;
+  max-width: 100%;
+
+  > * {
+    margin: $large-spacing 0;
     text-align: center;
     > * {
       text-align: initial;
@@ -22,8 +21,47 @@ body {
   }
 }
 
+nav {
+  border-radius: $border-radius;
+  > * {
+    margin: 0 $padding $padding $padding;
+  }
+  &.right {
+    float: right;
+  }
+  &.left {
+    float: left;
+  }
+  .icon {
+    cursor: pointer;
+    width: 2em;
+    height: 2em;
+    padding: 0.2em;
+    border-radius: $border-radius;
+    &:hover {
+      background-color: $color-hover-background;
+    }
+  }
+}
+
+h1 {
+  font-size: 1em;
+  text-align: left;
+  margin-left: $padding;
+  margin-right: $padding;
+  padding-top: 0.4em;
+}
+
+.right-aligned {
+  float: right;
+}
+
 * {
   box-sizing: border-box;
+}
+
+button {
+  margin-top: $padding;
 }
 
 input,
@@ -32,5 +70,6 @@ button {
 }
 
 .error {
+  margin-top: $padding;
   color: $color-red;
 }

@@ -7,7 +7,7 @@ module.exports = function(req, res) {
       return Promise.reject("Not admin");
     }
   });
-  const pointNormaliser = Promise.all([
+  const updatedSettings = Promise.all([
     userCollection.get(),
     taskCollection.get(),
   ]).then(function(snapshot) {
@@ -16,13 +16,13 @@ module.exports = function(req, res) {
     for (let task of snapshot[1].docs) {
       sum += task.get("effort") / task.get("frequency");
     }
-    return numberOfUsers / sum;
+    return { pointNormaliser: numberOfUsers / sum, numberOfUsers };
   });
-  Promise.all([adminPriviledge, pointNormaliser])
+  Promise.all([adminPriviledge, updatedSettings])
     .then(function(snapshot) {
       projectCollection
         .doc("parameters")
-        .set({ pointNormaliser: snapshot[1] })
+        .set(snapshot[1])
         .then(function() {
           res.sendStatus(204);
         });
