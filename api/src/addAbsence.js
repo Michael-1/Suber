@@ -8,7 +8,7 @@ const {
 module.exports = function(req, res) {
   const start = new Date(Number(req.query.start));
   const end = new Date(Number(req.query.end));
-  const points = (end - start) / (1000 * 60 * 60 * 24) - 10;
+  const points = (end - start) / (1000 * 60 * 60 * 24) - 9;
   if (points <= 0 || !points) {
     res.status(400).send("Only absences of more than 10 days give points");
     return;

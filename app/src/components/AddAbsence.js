@@ -85,7 +85,7 @@ const newAbsence = {
   },
 
   calculatePoints() {
-    let days = (newAbsence.end - newAbsence.start) / (1000 * 60 * 60 * 24);
+    let days = (newAbsence.end - newAbsence.start) / (1000 * 60 * 60 * 24) + 1;
     if (!days || days <= 0) days = undefined;
     newAbsence.days = days;
     let points = days - 10;
