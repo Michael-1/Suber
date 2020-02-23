@@ -3,4 +3,5 @@ module.exports = {
   settings: {},
   tasks: [],
   users: [],
+  initialMaxAbsPoints: 0,
 };

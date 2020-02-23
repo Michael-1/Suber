@@ -4,8 +4,6 @@ const { formatPoints } = require("../helpers/Formatting");
 require("./Balance.scss");
 
 module.exports = {
-  users: {},
-
   oninit: function() {
     return m
       .request({
@@ -18,6 +16,8 @@ module.exports = {
           if (b.currentUser) return 1;
           return b.points - a.points;
         });
+        const { maxAbsPoints } = getBalanceStatistics(store.users);
+        store.initialMaxAbsPoints = maxAbsPoints;
       })
       .catch(function(error) {
         if (error.code === 401) {
@@ -34,18 +34,8 @@ module.exports = {
     if (!store.users.length) {
       return;
     }
-    let totalPoints = 0;
-    for (user of store.users) {
-      totalPoints += user.points;
-      const absPoints = Math.abs(user.points);
-      if (absPoints > maxAbsPoints) maxAbsPoints = absPoints;
-    }
-    const meanPoints = totalPoints / store.users.length;
-    let maxAbsPoints = 0;
-    for (user of store.users) {
-      const absPoints = Math.abs(user.points - meanPoints);
-      if (absPoints > maxAbsPoints) maxAbsPoints = absPoints;
-    }
+    let { meanPoints, maxAbsPoints } = getBalanceStatistics(store.users);
+    maxAbsPoints = Math.max(maxAbsPoints, store.initialMaxAbsPoints);
     return (
       <table class="balance">
         {store.users.map(user => {
@@ -83,4 +73,18 @@ function formatBalanceNumber(number) {
   if (number < 0.5 && number > -0.5) return "0";
   if (number >= 0) return "+" + formatPoints(number);
   return "" + formatPoints(-number) + "−";
+}
+
+function getBalanceStatistics(users) {
+  let totalPoints = 0;
+  for (user of store.users) {
+    totalPoints += user.points;
+  }
+  const meanPoints = totalPoints / store.users.length;
+  let maxAbsPoints = 0;
+  for (user of users) {
+    const absPoints = Math.abs(user.points - meanPoints);
+    if (absPoints > maxAbsPoints) maxAbsPoints = absPoints;
+  }
+  return { meanPoints, maxAbsPoints };
 }
