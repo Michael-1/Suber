@@ -23,12 +23,12 @@ function Task(initialVnode) {
       return (
         <tr
           style={
-            task.status !== STATUS.DONE &&
-            task.urgency > 1 &&
-            `background-color:rgb(255,97,97,${(task.urgency - 1) /
-              (store.tasks[0].urgency - 1)})`
+            task.status !== STATUS.DONE && task.urgency > 1
+              ? `background-color:rgba(255,97,97,${(task.urgency - 1) /
+                  (store.tasks[0].urgency - 1)})`
+              : null
           }
-          class={task.status === STATUS.DONE && "done"}
+          class={task.status === STATUS.DONE ? "done" : null}
         >
           <td>
             <span class="room">{task.room}</span>

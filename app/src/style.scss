@@ -9,12 +9,13 @@ body {
 
 main {
   margin: auto;
-  width: max-content;
+  width: 40em;
   max-width: 100%;
 
   > * {
     margin: $large-spacing 0;
     text-align: center;
+    width: 100%;
     > * {
       text-align: initial;
     }
