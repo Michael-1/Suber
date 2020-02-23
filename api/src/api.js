@@ -1,13 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const auth = require("./auth");
-const getTasks = require("./getTasks");
-const getBalance = require("./getBalance");
-const getSettings = require("./getSettings");
-const markAsDone = require("./markAsDone");
-const updateProjectSettings = require("./updateProjectSettings");
-const getAbsences = require("./getAbsences");
-const addAbsence = require("./addAbsence");
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -19,13 +12,18 @@ app.use(auth.passport.session());
 
 app.post("/api/login", auth.authenticate);
 
-app.get("/api/tasks", auth.isAuthentic, getTasks);
-app.get("/api/balance", auth.isAuthentic, getBalance);
-app.get("/api/settings", auth.isAuthentic, getSettings);
-app.post("/api/task/:key/done", auth.isAuthentic, markAsDone);
-app.patch("/api/settings", auth.isAuthentic, updateProjectSettings);
-app.get("/api/absences", auth.isAuthentic, getAbsences);
-app.post("/api/absence", auth.isAuthentic, addAbsence);
+app.get("/api/tasks", auth.isAuthentic, require("./getTasks"));
+app.get("/api/balance", auth.isAuthentic, require("./getBalance"));
+app.get("/api/settings", auth.isAuthentic, require("./getSettings"));
+app.post("/api/task/:key/done", auth.isAuthentic, require("./markAsDone"));
+app.post("/api/task/:key/undo", auth.isAuthentic, require("./undo"));
+app.get("/api/absences", auth.isAuthentic, require("./getAbsences"));
+app.post("/api/absence", auth.isAuthentic, require("./addAbsence"));
+app.patch(
+  "/api/settings",
+  auth.isAuthentic,
+  require("./updateProjectSettings")
+);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

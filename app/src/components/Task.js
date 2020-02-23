@@ -7,6 +7,7 @@ const Loader = require("./Loader");
 require("./Task.scss");
 
 const STATUS = {
+  STATUS: "INITIAL",
   PROCESSING: "PROCESSING",
   DONE: "DONE",
   FAILED: "FAILED",
@@ -40,19 +41,25 @@ function Task(initialVnode) {
               formatPoints(
                 task.points *
                   balanceChangeFactor *
-                  (task.status !== STATUS.DONE
-                    ? store.settings.pointNormaliser
-                    : 1)
+                  store.settings.pointNormaliser
               )}
           </td>
           <td>
             <button
-              onclick={this.markAsDone.bind(task)}
-              disabled={
-                task.status === STATUS.PROCESSING || task.status === STATUS.DONE
+              onclick={
+                task.status === STATUS.DONE
+                  ? this.undo.bind(task)
+                  : this.markAsDone.bind(task)
               }
+              disabled={task.status === STATUS.PROCESSING}
             >
-              {task.status === STATUS.PROCESSING ? <Loader /> : "  ✔  "}
+              {task.status === STATUS.PROCESSING ? (
+                <Loader />
+              ) : task.status === STATUS.DONE ? (
+                "↺"
+              ) : (
+                "  ✔  "
+              )}
             </button>
           </td>
         </tr>
@@ -67,8 +74,20 @@ function Task(initialVnode) {
         params: { key: this.key },
       }).then(res => {
         this.status = STATUS.DONE;
-        this.points = res.points;
         Balance.addPoints(res.points);
+      });
+    },
+
+    undo: function() {
+      this.status = STATUS.PROCESSING;
+      m.request({
+        method: "POST",
+        url: "/api/task/:key/undo",
+        params: { key: this.key },
+      }).then(res => {
+        this.status = STATUS.INITIAL;
+        this.lastDone = new Date(res.lastDone);
+        Balance.addPoints(-res.points);
       });
     },
   };

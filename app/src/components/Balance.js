@@ -35,7 +35,11 @@ module.exports = {
       return;
     }
     let { meanPoints, maxAbsPoints } = getBalanceStatistics(store.users);
-    maxAbsPoints = Math.max(maxAbsPoints, store.initialMaxAbsPoints);
+    if (maxAbsPoints > store.initialMaxAbsPoints) {
+      store.initialMaxAbsPoints = maxAbsPoints;
+    } else {
+      maxAbsPoints = store.initialMaxAbsPoints;
+    }
     return (
       <table class="balance">
         {store.users.map(user => {

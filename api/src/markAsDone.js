@@ -34,7 +34,9 @@ module.exports = function markAsDone(req, res) {
         time: currentTime,
         user: req.user,
         task: req.params.key,
+        taskDetails: taskData,
         points,
+        status: "done",
       });
     })
     .catch(function(err) {
