@@ -5,7 +5,8 @@
   "repository": "https://github.com/Michael-1/Suber.git",
   "scripts": {
     "dev": "nodemon --inspect src/api.js",
-    "start": "node src/api.js"
+    "start": "node src/api.js",
+    "deploy": "gcloud app deploy -q"
   },
   "dependencies": {
     "@google-cloud/connect-firestore": "^1.0.4",
