@@ -3,7 +3,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const { FirestoreStore } = require("@google-cloud/connect-firestore");
 const argon2 = require("argon2");
-const { database } = require("./db");
+const { database, userCollection } = require("./db");
 require("dotenv").config();
 
 const YEAR = 1000 * 60 * 60 * 24 * 365.2425;
@@ -21,12 +21,14 @@ const session = expressSession({
   saveUninitialized: false,
 });
 
+console.log(process.env.NODE_ENV === "development")
+
 passport.use(
   new LocalStrategy((email, password, done) => {
     const startTime = new Date();
-    database
-      .collection("User")
+    userCollection
       .where("email", "==", email)
+      .where('status','==','active')
       .get()
       .then(function(snapshot) {
         if (snapshot.empty) return invalidCredentials(done, startTime);
