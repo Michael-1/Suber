@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
-    "deploy": "npm run build; gcloud app deploy -q"
+    "deploy": "npm run build && gcloud app deploy -q"
   },
   "engines": {
     "node": "10.x"
