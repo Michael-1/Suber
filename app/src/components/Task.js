@@ -16,7 +16,7 @@ const STATUS = {
 function Task(initialVnode) {
   users = initialVnode;
   return {
-    view: function(vnode) {
+    view: function (vnode) {
       const task = vnode.attrs;
       const numberOfUsers = store.users.length;
       const balanceChangeFactor = (numberOfUsers - 1) / numberOfUsers;
@@ -25,8 +25,9 @@ function Task(initialVnode) {
         <tr
           style={
             task.status !== STATUS.DONE && task.urgency > 1
-              ? `background-color:rgba(255,97,97,${(task.urgency - 1) /
-                  (store.tasks[0].urgency - 1)})`
+              ? `background-color:rgba(255,97,97,${
+                  (task.urgency - 1) / Math.max(store.tasks[0].urgency - 1, 1)
+                })`
               : null
           }
           class={task.status === STATUS.DONE ? "done" : null}
@@ -66,25 +67,25 @@ function Task(initialVnode) {
       );
     },
 
-    markAsDone: function() {
+    markAsDone: function () {
       this.status = STATUS.PROCESSING;
       m.request({
         method: "POST",
         url: "/api/task/:key/done",
         params: { key: this.key },
-      }).then(res => {
+      }).then((res) => {
         this.status = STATUS.DONE;
         Balance.addPoints(res.points);
       });
     },
 
-    undo: function() {
+    undo: function () {
       this.status = STATUS.PROCESSING;
       m.request({
         method: "POST",
         url: "/api/task/:key/undo",
         params: { key: this.key },
-      }).then(res => {
+      }).then((res) => {
         this.status = STATUS.INITIAL;
         this.lastDone = new Date(res.lastDone);
         Balance.addPoints(-res.points);
