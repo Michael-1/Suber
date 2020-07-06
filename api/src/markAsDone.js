@@ -20,13 +20,17 @@ module.exports = function markAsDone(req, res) {
       return taskDoc.data();
     });
   });
-  const pointNormaliser = projectDocRef.get(projectDocRef);
-  Promise.all([task, pointNormaliser])
-    .then(function(snapshot) {
-      const taskData = snapshot[0];
+  const project = projectDocRef.get();
+  const user = userDocRef.get();
+  Promise.all([task, project, user])
+    .then(function (snapshot) {
+      const [taskData, project, user] = snapshot;
       taskData.lastDone = taskData.lastDone.toDate();
       const task = new Task(taskData, currentTime);
-      const points = task.points * snapshot[1].get("pointNormaliser");
+      const points =
+        task.points *
+        (user.get("pointMultiplier") || 1) *
+        project.get("pointNormaliser");
       res.json({ points });
       if (points == 0) return;
       userDocRef.update("points", Firestore.FieldValue.increment(points));

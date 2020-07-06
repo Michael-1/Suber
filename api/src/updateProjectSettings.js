@@ -10,13 +10,16 @@ module.exports = function(req, res) {
   const updatedSettings = Promise.all([
     userCollection.get(),
     taskCollection.get(),
-  ]).then(function(snapshot) {
-    const numberOfUsers = snapshot[0].docs.length;
+  ]).then(function (snapshot) {
+    const [users, tasks] = snapshot;
+    let weightedUserCount = 0;
+    for (const user of users.docs)
+      weightedUserCount += user.get("pointMultiplier") || 1;
     let sum = 0;
-    for (let task of snapshot[1].docs) {
+    for (let task of tasks.docs) {
       sum += task.get("effort") / task.get("frequency");
     }
-    return { pointNormaliser: numberOfUsers / sum, numberOfUsers };
+    return { pointNormaliser: weightedUserCount / sum, weightedUserCount };
   });
   Promise.all([adminPriviledge, updatedSettings])
     .then(function(snapshot) {
