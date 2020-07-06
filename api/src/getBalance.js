@@ -1,7 +1,7 @@
 const { userCollection } = require("./db");
 
 module.exports = function(req, res) {
-  userCollection
+  userCollection.where('status','==','active')
     .get()
     .then(function(snapshot) {
       const users = [];

@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
-    "deploy": "npm run build; gcloud app deploy -q"
+    "deploy": "npm run build && gcloud app deploy -q"
   },
   "engines": {
     "node": "10.x"
@@ -18,7 +18,7 @@
     "babel-loader": "^8.0.6",
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.2.1",
-    "favicons-webpack-plugin": "^1.0.2",
+    "favicons-webpack-plugin": "^2",
     "fibers": "^4.0.2",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",

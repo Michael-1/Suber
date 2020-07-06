@@ -8,7 +8,7 @@ module.exports = function(req, res) {
     }
   });
   const updatedSettings = Promise.all([
-    userCollection.get(),
+    userCollection.where('status','==','active').get(),
     taskCollection.get(),
   ]).then(function (snapshot) {
     const [users, tasks] = snapshot;
