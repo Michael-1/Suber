@@ -36,5 +36,6 @@
     "eslint-plugin-mithril": "^0.2.0",
     "file-loader": "^5.0.2",
     "webpack-dev-server": "^3.11.0"
-  }
+  },
+  "browserslist": "cover 80% in CH"
 }
