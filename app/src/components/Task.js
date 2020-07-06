@@ -13,8 +13,7 @@ const STATUS = {
   FAILED: "FAILED",
 };
 
-function Task(initialVnode) {
-  users = initialVnode;
+function Task() {
   return {
     view: function(vnode) {
       const task = vnode.attrs;

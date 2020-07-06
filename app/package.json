@@ -32,6 +32,8 @@
     "webpack-merge": "^4.2.2"
   },
   "devDependencies": {
+    "eslint": "^7.4.0",
+    "eslint-plugin-mithril": "^0.2.0",
     "file-loader": "^5.0.2",
     "webpack-dev-server": "^3.9.0"
   }

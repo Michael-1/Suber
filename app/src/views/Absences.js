@@ -1,5 +1,4 @@
 const m = require("mithril");
-const store = require("../store");
 const AddAbsence = require("../components/AddAbsence");
 const AbsenceList = require("../components/AbsenceList");
 

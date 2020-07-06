@@ -27,7 +27,7 @@ const login = {
                   .trim()
                   .toLowerCase();
               }}
-              oninput={function(e) {
+              oninput={function () {
                 login.status = STATUS.FRESH;
               }}
               required

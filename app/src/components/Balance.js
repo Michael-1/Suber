@@ -46,7 +46,7 @@ module.exports = {
           const points = user.points - meanPoints;
           const barWidth = (points / maxAbsPoints) * 100;
           return (
-            <tr>
+            <tr key={user.key}>
               <td>
                 {points >= 0 && <span>{user.name}</span>}
                 <div
@@ -81,12 +81,12 @@ function formatBalanceNumber(number) {
 
 function getBalanceStatistics(users) {
   let totalPoints = 0;
-  for (user of store.users) {
+  for (const user of store.users) {
     totalPoints += user.points;
   }
   const meanPoints = totalPoints / store.users.length;
   let maxAbsPoints = 0;
-  for (user of users) {
+  for (const user of users) {
     const absPoints = Math.abs(user.points - meanPoints);
     if (absPoints > maxAbsPoints) maxAbsPoints = absPoints;
   }

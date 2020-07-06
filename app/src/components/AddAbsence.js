@@ -124,7 +124,7 @@ const newAbsence = {
       }
       return false;
     }
-    for (existingAbsence of store.absences) {
+    for (const existingAbsence of store.absences) {
       if (
         existingAbsence.end > newAbsence.start &&
         existingAbsence.start < newAbsence.end
