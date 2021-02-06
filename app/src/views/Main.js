@@ -5,6 +5,7 @@ const TaskList = require("../components/TaskList");
 
 module.exports = {
   oninit: function() {
+    
     return m
       .request({
         method: "GET",

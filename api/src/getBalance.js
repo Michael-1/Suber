@@ -1,9 +1,11 @@
 const { userCollection } = require("./db");
 
-module.exports = function(req, res) {
-  userCollection.where('status','==','active')
+module.exports = async function (req, res) {
+  userCollection
+    .where("projects", "array-contains", req.project)
+    .where("status", "==", "active")
     .get()
-    .then(function(snapshot) {
+    .then(function (snapshot) {
       const users = [];
       for (let doc of snapshot.docs) {
         users.push({
@@ -15,7 +17,7 @@ module.exports = function(req, res) {
       }
       res.json(users);
     })
-    .catch(function(err) {
+    .catch(function (err) {
       console.log(err);
     });
 };
