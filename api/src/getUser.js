@@ -7,7 +7,7 @@ module.exports = function (req, res) {
     .then(function (doc) {
       res.json({
         id: req.userdoc.data(),
-        projects: doc.get("projects"),
+        communities: doc.get("communities"),
       });
     });
 };

@@ -1,8 +1,7 @@
-const { projectCollection } = require("./db");
+const { communityDoc } = require("./db");
 
 module.exports = function(req, res) {
-  projectCollection
-    .doc("parameters")
+  communityDoc
     .get()
     .then(function(doc) {
       res.json(doc.data());

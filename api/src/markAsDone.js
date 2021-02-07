@@ -4,11 +4,9 @@ const {
   taskCollection,
   userCollection,
   journalCollection,
-  projectCollection,
+  communityDoc,
 } = require("./db");
 const Task = require("./model/Task");
-
-const projectDocRef = projectCollection.doc("parameters");
 
 module.exports = function markAsDone(req, res) {
   const currentTime = new Date();
@@ -20,17 +18,17 @@ module.exports = function markAsDone(req, res) {
       return taskDoc.data();
     });
   });
-  const project = projectDocRef.get();
+  const community = communityDoc.get();
   const user = userDocRef.get();
-  Promise.all([task, project, user])
+  Promise.all([task, community, user])
     .then(function (snapshot) {
-      const [taskData, project, user] = snapshot;
+      const [taskData, community, user] = snapshot;
       taskData.lastDone = taskData.lastDone.toDate();
       const task = new Task(taskData, currentTime);
       const points =
         task.points *
         (user.get("pointMultiplier") || 1) *
-        project.get("pointNormaliser");
+        community.get("pointNormaliser");
       res.json({ points });
       if (points == 0) return;
       userDocRef.update("points", Firestore.FieldValue.increment(points));

@@ -7,16 +7,16 @@ const database = new Firestore({
       : "suber-256519",
 });
 
-const projectCollection = (projectId) =>
-  database.collection("Project").doc(projectId);
+const communityDoc = (communityId) =>
+  database.collection("Community").doc(communityId);
 
 module.exports = {
   Firestore,
   database,
-  journalCollection: (projectId) =>
-    projectCollection(projectId).collection("Journal"),
-  projectCollection,
-  taskCollection: (projectId) =>
-    projectCollection(projectId).collection("Task"),
+  journalCollection: (communityId) =>
+    communityDoc(communityId).collection("Journal"),
+  communityDoc,
+  taskCollection: (communityId) =>
+    communityDoc(communityId).collection("Task"),
   userCollection: database.collection("User"),
 };

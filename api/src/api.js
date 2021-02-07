@@ -22,7 +22,7 @@ app.post("/api/absence", auth.isAuthentic, require("./addAbsence"));
 app.patch(
   "/api/settings",
   auth.isAuthentic,
-  require("./updateProjectSettings")
+  require("./updateCommunitySettings")
 );
 
 const PORT = process.env.PORT || 3000;

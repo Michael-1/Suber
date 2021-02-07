@@ -1,4 +1,4 @@
-const { taskCollection, userCollection, projectCollection } = require("./db");
+const { taskCollection, userCollection, communityDoc } = require("./db");
 
 module.exports = function(req, res) {
   const userDocRef = userCollection.doc(req.user);
@@ -23,7 +23,7 @@ module.exports = function(req, res) {
   });
   Promise.all([adminPriviledge, updatedSettings])
     .then(function(snapshot) {
-      projectCollection
+      communityDoc
         .doc("parameters")
         .set(snapshot[1])
         .then(function() {

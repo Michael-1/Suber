@@ -1,7 +1,7 @@
 const { database, userCollection } = require("../src/db");
 
-const projectId = "yz475coWh2CAaYHwNJKp";
-const projectRef = database.collection("Project").doc(projectId);
+const communityId = "yz475coWh2CAaYHwNJKp";
+const communityRef = database.collection("Community").doc(communityId);
 
 const migrateCollection = async (oldCollection, newCollection) => {
   const journal = await oldCollection.get();
@@ -11,14 +11,14 @@ const migrateCollection = async (oldCollection, newCollection) => {
 };
 migrateCollection(
   database.collection("Journal"),
-  projectRef.collection("Journal")
+  communityRef.collection("Journal"),
 );
-migrateCollection(database.collection("Task"), projectRef.collection("Task"));
+migrateCollection(database.collection("Task"),communityRef.collection("Task"),);
 
 const migrateUsers = async () => {
   const users = await userCollection.get();
   for (const doc of users.docs) {
-    doc.ref.update("projects", [projectId]);
+    doc.ref.update("communities", [communityId]);
   }
 };
 migrateUsers();
