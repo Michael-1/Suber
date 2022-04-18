@@ -2,7 +2,7 @@ const { userCollection } = require("./db");
 
 module.exports = async function (req, res) {
   userCollection
-    .where("communities", "array-contains", req.community)
+    .where("community", "==", req.community)
     .where("status", "==", "active")
     .get()
     .then(function (snapshot) {

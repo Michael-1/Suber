@@ -1,7 +1,7 @@
 const { taskCollection } = require("./db");
 
-module.exports = function(req, res) {
-  taskCollection
+module.exports = function (req, res) {
+  taskCollection(req.community)
     .get()
     .then(function (snapshot) {
       const tasks = [];

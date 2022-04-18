@@ -4,21 +4,16 @@ const Balance = require("../components/Balance");
 const TaskList = require("../components/TaskList");
 
 module.exports = {
-  oninit: function() {
-    
-    return m
-      .request({
-        method: "GET",
+  oninit: async () => {
+    try {
+      store.settings = await m.request({
         url: "/api/settings",
-      })
-      .then(function(result) {
-        store.settings = result;
-      })
-      .catch(function(error) {
-        if (error.code === 401) {
-          m.route.set("/login");
-        }
       });
+    } catch (error) {
+      if (error.code === 401) {
+        m.route.set("/login");
+      }
+    }
   },
 
   view: function () {

@@ -1,9 +1,9 @@
 const { communityDoc } = require("./db");
 
-module.exports = function(req, res) {
-  communityDoc
+module.exports = function (req, res) {
+  communityDoc(req.community)
     .get()
-    .then(function(doc) {
+    .then(function (doc) {
       res.json(doc.data());
     });
 };

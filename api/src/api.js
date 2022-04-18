@@ -10,9 +10,9 @@ app.set("trust proxy", 1);
 app.use(auth.session);
 app.use(auth.passport.initialize());
 app.use(auth.passport.session());
+app.use(require("./community"));
 
 app.post("/api/login", auth.authenticate);
-
 app.get("/api/tasks", auth.isAuthentic, require("./getTasks"));
 app.get("/api/balance", auth.isAuthentic, require("./getBalance"));
 app.get("/api/settings", auth.isAuthentic, require("./getSettings"));
