@@ -11,14 +11,14 @@ const migrateCollection = async (oldCollection, newCollection) => {
 };
 migrateCollection(
   database.collection("Journal"),
-  communityRef.collection("Journal"),
+  communityRef.collection("Journal")
 );
-migrateCollection(database.collection("Task"),communityRef.collection("Task"),);
+migrateCollection(database.collection("Task"), communityRef.collection("Task"));
 
 const migrateUsers = async () => {
   const users = await userCollection.get();
   for (const doc of users.docs) {
-    doc.ref.update("communities", [communityId]);
+    doc.ref.update("community", communityId);
   }
 };
 migrateUsers();

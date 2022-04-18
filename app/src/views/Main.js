@@ -21,7 +21,7 @@ module.exports = {
       });
   },
 
-  view: function() {
+  view: function () {
     return (
       <div>
         <nav class="right">

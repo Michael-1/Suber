@@ -28,9 +28,8 @@ module.exports = function(req, res) {
         .set(snapshot[1])
         .then(function() {
           res.sendStatus(204);
-        });
     })
-    .catch(function(err) {
+    .catch(function (err) {
       res.status(403);
       res.send(err);
     });
