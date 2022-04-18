@@ -10,16 +10,16 @@ module.exports = function markAsDone(req, res) {
   let points;
   let lastDone;
   database
-    .runTransaction(function(transaction) {
+    .runTransaction(function (transaction) {
       return transaction
         .get(
-          journalCollection
+          journalCollection(req.community)
             .where("task", "==", req.params.key)
             .where("status", "==", "done")
             .orderBy("time", "desc")
             .limit(1)
         )
-        .then(function(journalDoc) {
+        .then(function (journalDoc) {
           const entry = journalDoc.docs[0];
           if (journalDoc.empty || entry.get("user") !== req.user)
             return Promise.reject("You can only undo your own work");
@@ -27,7 +27,7 @@ module.exports = function markAsDone(req, res) {
           lastDone = entry.get("taskDetails.lastDone");
           transaction.update(entry.ref, "status", "undone");
           transaction.update(
-            taskCollection.doc(req.params.key),
+            taskCollection(req.community).doc(req.params.key),
             "lastDone",
             lastDone
           );
@@ -38,10 +38,10 @@ module.exports = function markAsDone(req, res) {
           );
         });
     })
-    .then(function() {
+    .then(function () {
       res.json({ points, lastDone: lastDone.toDate() });
     })
-    .catch(function(err) {
+    .catch(function (err) {
       res.status(403).send(err);
     });
 };

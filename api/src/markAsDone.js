@@ -10,15 +10,15 @@ const Task = require("./model/Task");
 
 module.exports = function markAsDone(req, res) {
   const currentTime = new Date();
-  const taskDocRef = taskCollection.doc(req.params.key);
+  const taskDocRef = taskCollection(req.community).doc(req.params.key);
   const userDocRef = userCollection.doc(req.user);
-  const task = database.runTransaction(function(transaction) {
-    return transaction.get(taskDocRef).then(function(taskDoc) {
+  const task = database.runTransaction(function (transaction) {
+    return transaction.get(taskDocRef).then(function (taskDoc) {
       transaction.update(taskDoc.ref, { lastDone: currentTime });
       return taskDoc.data();
     });
   });
-  const community = communityDoc.get();
+  const community = communityDoc(req.community).get();
   const user = userDocRef.get();
   Promise.all([task, community, user])
     .then(function (snapshot) {
@@ -32,7 +32,7 @@ module.exports = function markAsDone(req, res) {
       res.json({ points });
       if (points == 0) return;
       userDocRef.update("points", Firestore.FieldValue.increment(points));
-      journalCollection.add({
+      journalCollection(req.community).add({
         time: currentTime,
         user: req.user,
         task: req.params.key,
@@ -41,7 +41,7 @@ module.exports = function markAsDone(req, res) {
         status: "done",
       });
     })
-    .catch(function(err) {
+    .catch(function (err) {
       console.error(err);
       res.sendStatus(500);
     });
