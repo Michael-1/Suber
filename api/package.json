@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon --inspect src/api.js",
     "start": "node src/api.js",
-    "deploy": "gcloud app deploy -q"
+    "deploy": "gcloud app deploy -q --project=suber-256519"
   },
   "dependencies": {
     "@google-cloud/connect-firestore": "^2.0.1",
