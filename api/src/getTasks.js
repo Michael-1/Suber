@@ -1,9 +1,9 @@
 const { taskCollection } = require("./db");
 
-module.exports = function(req, res) {
-  taskCollection
+module.exports = function (req, res) {
+  taskCollection(req.community)
     .get()
-    .then(function(snapshot) {
+    .then(function (snapshot) {
       const tasks = [];
       for (let doc of snapshot.docs) {
         const task = doc.data();
@@ -13,7 +13,7 @@ module.exports = function(req, res) {
       }
       res.json(tasks);
     })
-    .catch(function(err) {
+    .catch(function (err) {
       console.log(err);
     });
 };

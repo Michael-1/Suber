@@ -4,13 +4,13 @@ const { formatPoints } = require("../helpers/Formatting");
 require("./Balance.scss");
 
 module.exports = {
-  oninit: function() {
+  oninit: function () {
     return m
       .request({
         method: "GET",
         url: "/api/balance",
       })
-      .then(function(result) {
+      .then(function (result) {
         store.users = result.sort((a, b) => {
           if (a.currentUser) return -1;
           if (b.currentUser) return 1;
@@ -19,18 +19,18 @@ module.exports = {
         const { maxAbsPoints } = getBalanceStatistics(store.users);
         store.initialMaxAbsPoints = maxAbsPoints;
       })
-      .catch(function(error) {
+      .catch(function (error) {
         if (error.code === 401) {
           m.route.set("/login");
         }
       });
   },
 
-  addPoints: function(points) {
-    store.users.find(u => u.currentUser).points += points;
+  addPoints: function (points) {
+    store.users.find((u) => u.currentUser).points += points;
   },
 
-  view: function() {
+  view: function () {
     if (!store.users.length) {
       return;
     }
@@ -42,7 +42,7 @@ module.exports = {
     }
     return (
       <table class="balance">
-        {store.users.map(user => {
+        {store.users.map((user) => {
           const points = user.points - meanPoints;
           const barWidth = (points / maxAbsPoints) * 100;
           return (

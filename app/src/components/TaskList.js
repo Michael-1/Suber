@@ -7,17 +7,17 @@ const Task = require("../model/Task");
 module.exports = {
   error: false,
 
-  oninit: function() {
+  oninit: function () {
     return m
       .request({
         method: "GET",
         url: "/api/tasks",
         type: Task,
       })
-      .then(result => {
+      .then((result) => {
         store.tasks = result.sort((a, b) => b.urgency - a.urgency);
       })
-      .catch(error => {
+      .catch((error) => {
         if (error.code === 401) {
           m.route.set("/login");
         }
@@ -25,7 +25,7 @@ module.exports = {
       });
   },
 
-  view: function() {
+  view: function () {
     if (store.tasks.length === 0) {
       if (!this.error)
         return (
@@ -38,7 +38,7 @@ module.exports = {
     }
     return (
       <table class="task-list">
-        {store.tasks.map(task => {
+        {store.tasks.map((task) => {
           return m(TaskComponent, task);
         })}
       </table>

@@ -4,7 +4,6 @@ const LocalStrategy = require("passport-local").Strategy;
 const { FirestoreStore } = require("@google-cloud/connect-firestore");
 const argon2 = require("argon2");
 const { database, userCollection } = require("./db");
-require("dotenv").config();
 
 const YEAR = 1000 * 60 * 60 * 24 * 365.2425;
 const session = expressSession({
@@ -21,20 +20,18 @@ const session = expressSession({
   saveUninitialized: false,
 });
 
-console.log(process.env.NODE_ENV === "development")
-
 passport.use(
   new LocalStrategy((email, password, done) => {
     const startTime = new Date();
     userCollection
       .where("email", "==", email)
-      .where('status','==','active')
+      .where("status", "==", "active")
       .get()
-      .then(function(snapshot) {
+      .then(function (snapshot) {
         if (snapshot.empty) return invalidCredentials(done, startTime);
         const user = snapshot.docs[0];
         var start = new Date();
-        argon2.verify(user.get("password"), password).then(function(same) {
+        argon2.verify(user.get("password"), password).then(function (same) {
           console.debug(`Argon2 runtime: ${new Date() - start}ms`);
           if (same) return done(null, user.id);
           return invalidCredentials(done, startTime);
@@ -43,7 +40,7 @@ passport.use(
   })
 );
 function invalidCredentials(done, startTime) {
-  setTimeout(function() {
+  setTimeout(function () {
     return done(null, false);
   }, startTime - new Date() + 5000);
 }
@@ -54,15 +51,14 @@ passport.deserializeUser((userId, done) => {
   done(null, userId);
 });
 
-const authenticate = function(req, res, next) {
+const authenticate = function (req, res, next) {
   passport.authenticate("local", (err, user, info) => {
     if (info) return res.status(401).send(info.message);
     if (err) {
       return next(err);
-      console.error(err);
     }
     if (!user) return res.sendStatus(401);
-    req.login(user, err => {
+    req.login(user, () => {
       return res.sendStatus(204);
     });
   })(req, res, next);
