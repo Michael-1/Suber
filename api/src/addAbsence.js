@@ -48,7 +48,7 @@ module.exports = function(req, res) {
             "points",
             Firestore.FieldValue.increment(points)
           );
-          transaction.create(journalCollection.doc(), {
+          transaction.create(journalCollection(req.community).doc(), {
             time: new Date(),
             user: req.user,
             type: "absence",
